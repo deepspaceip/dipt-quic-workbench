@@ -1,12 +1,9 @@
-Deep Space Quinn Workbench 2
-============================
+QUIC Workbench
+==============
 
 A command-line application to simulate QUIC connections in different scenarios (network topology and
 QUIC parameters). The simulation creates one or more connections, issues a fixed number of requests
 from the client to the server, and streams the server's responses back to the client.
-
-_Note: for the previous version of quinn workbench go to [this
-branch](https://github.com/aochagavia/quinn-workbench/tree/v1)._
 
 ## Features
 
@@ -20,14 +17,6 @@ branch](https://github.com/aochagavia/quinn-workbench/tree/v1)._
   `test-data` and [JSON config details](#json-config-details)).
 - Configurable simulation behavior through command-line arguments (see `cargo run --release --
   --help`).
-
-## Roadmap
-
-We are __currently working towards a 1.0 release__ (see [remaining
-issues](https://github.com/aochagavia/quinn-workbench/issues?q=is%3Aissue%20state%3Aopen%20label%3Av1.0)).
-If you want to get involved (testing the current implementation, submitting patches, etc), please
-do! You can comment on relevant issues or join the `#quinn-workbench` channel in [our Discord
-server](https://discord.gg/NgZJ2hUkQQ).
 
 ## Getting started
 
