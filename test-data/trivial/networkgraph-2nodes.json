@@ -23,8 +23,8 @@
                 "maximize_send_and_receive_windows": true,
                 "max_ack_delay_ms": 23760000,
                 "ack_eliciting_threshold": 10,
-                "use_ecn_based_reno": false,
-                "fixed_congestion_window": 18446744073709551615
+                "congestion_controller": "no_cc",
+                "initial_congestion_window_packets": 375000
             }
         },
         {
@@ -49,8 +49,8 @@
                 "maximize_send_and_receive_windows": true,
                 "max_ack_delay_ms": 23760000,
                 "ack_eliciting_threshold": 10,
-                "use_ecn_based_reno": false,
-                "fixed_congestion_window": 18446744073709551615
+                "congestion_controller": "no_cc",
+                "initial_congestion_window_packets": 375000
             }
         }
     ],

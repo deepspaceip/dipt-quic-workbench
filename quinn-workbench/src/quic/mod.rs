@@ -1,12 +1,12 @@
 use crate::config::cli::QuicOpt;
-use crate::config::quinn::QuinnJsonConfig;
+use crate::config::quinn::{CongestionControlAlgorithm, QuinnJsonConfig};
 use crate::load_network_config;
 use crate::quic::simulation::QuicSimulation;
 use crate::quinn_extensions::ecn_cc::EcnCcFactory;
 use crate::quinn_extensions::no_cc::NoCCConfig;
 use crate::util::{print_link_stats, print_max_buffer_usage_per_node, print_node_stats};
 use anyhow::Context;
-use quinn_proto::congestion::NewRenoConfig;
+use quinn_proto::congestion::{BbrConfig, CubicConfig, NewRenoConfig};
 use quinn_proto::{AckFrequencyConfig, EndpointConfig, TransportConfig, VarInt};
 use std::fs;
 use std::sync::Arc;
@@ -99,15 +99,50 @@ fn transport_config(quinn_config: &QuinnJsonConfig) -> TransportConfig {
 
     config.packet_threshold(quinn_config.packet_threshold);
 
-    if let Some(congestion_window) = quinn_config.fixed_congestion_window {
-        assert!(!quinn_config.use_ecn_based_reno);
-
-        config.congestion_controller_factory(Arc::new(NoCCConfig {
-            initial_window: congestion_window,
-        }));
-    } else {
-        config.congestion_controller_factory(Arc::new(EcnCcFactory::new(NewRenoConfig::default())));
-    }
+    let get_congestion_window_bytes = |packets: u64| packets * BASE_DATAGRAM_SIZE;
+    let cc_factory: Arc<dyn quinn_proto::congestion::ControllerFactory + Send + Sync> =
+        match quinn_config.congestion_controller {
+            CongestionControlAlgorithm::Cubic => {
+                let mut cfg = CubicConfig::default();
+                if let Some(packets) = quinn_config.initial_congestion_window_packets {
+                    cfg.initial_window(get_congestion_window_bytes(packets));
+                }
+                Arc::new(cfg)
+            }
+            CongestionControlAlgorithm::NewReno => {
+                let mut cfg = NewRenoConfig::default();
+                if let Some(packets) = quinn_config.initial_congestion_window_packets {
+                    cfg.initial_window(get_congestion_window_bytes(packets));
+                }
+                Arc::new(cfg)
+            }
+            CongestionControlAlgorithm::Bbr => {
+                let mut cfg = BbrConfig::default();
+                if let Some(packets) = quinn_config.initial_congestion_window_packets {
+                    cfg.initial_window(get_congestion_window_bytes(packets));
+                }
+                Arc::new(cfg)
+            }
+            CongestionControlAlgorithm::NoCc => {
+                let congestion_window_bytes =
+                    if let Some(packets) = quinn_config.initial_congestion_window_packets {
+                        get_congestion_window_bytes(packets)
+                    } else {
+                        u64::MAX
+                    };
+                Arc::new(NoCCConfig {
+                    initial_window: congestion_window_bytes,
+                })
+            }
+            CongestionControlAlgorithm::EcnReno => {
+                let mut cfg = NewRenoConfig::default();
+                if let Some(packets) = quinn_config.initial_congestion_window_packets {
+                    cfg.initial_window(get_congestion_window_bytes(packets));
+                }
+                Arc::new(EcnCcFactory::new(cfg))
+            }
+        };
+    config.congestion_controller_factory(cc_factory);
 
     let mut ack_frequency_config = AckFrequencyConfig::default();
     ack_frequency_config
@@ -122,3 +157,5 @@ fn transport_config(quinn_config: &QuinnJsonConfig) -> TransportConfig {
 
     config
 }
+
+const BASE_DATAGRAM_SIZE: u64 = 1200;
