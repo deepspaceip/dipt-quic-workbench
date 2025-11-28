@@ -1,5 +1,21 @@
 use serde::Deserialize;
 
+#[derive(Deserialize, Clone, Copy, Debug)]
+#[serde(rename_all = "snake_case")]
+pub enum CongestionControlAlgorithm {
+    /// Cubic congestion control (Quinn default)
+    Cubic,
+    /// NewReno congestion control
+    NewReno,
+    /// BBR congestion control
+    Bbr,
+    /// Disables congestion control and uses the intial_congestion_window as a fixed window instead
+    NoCc,
+    /// Configures congestion control to use a variant of `NewReno` that ignores packet
+    /// loss and only takes ECN into consideration.
+    EcnReno,
+}
+
 #[derive(Deserialize, Clone)]
 pub struct QuinnJsonConfig {
     /// The initial RTT of the QUIC connection, in milliseconds (used before an RTT sample is
@@ -35,10 +51,10 @@ pub struct QuinnJsonConfig {
     /// Setting this to a high value is particularly useful in combination with a high ACK-eliciting
     /// threshold.
     pub max_ack_delay_ms: u64,
-    /// If provided, disables congestion control and uses a fixed congestion window instead
-    /// (specified in bytes).
-    pub fixed_congestion_window: Option<u64>,
-    /// If true, configures congestion control to use a variant of `NewReno` that ignores packet
-    /// loss and only takes ECN into consideration.
-    pub use_ecn_based_reno: bool,
+    /// Which congestion control algorithm to use
+    pub congestion_controller: CongestionControlAlgorithm,
+    /// The initial congestion window size in multiples of base datagram size. If missing the algorithm's
+    /// default is used.
+    /// For 'NoCc', this value is used as the fixed, constant window. If missing it defaults to u64::MAX.
+    pub initial_congestion_window_packets: Option<u64>,
 }

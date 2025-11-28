@@ -116,7 +116,8 @@ used by that node. Consider the following example:
   "maximize_send_and_receive_windows": true,
   "max_ack_delay_ms": 18446744073709551615,
   "ack_eliciting_threshold": 10,
-  "fixed_congestion_window": 10240
+  "congestion_controller": "no_cc",
+  "initial_congestion_window_packets": 200000
 }
 ```
 
@@ -140,8 +141,11 @@ Here's the meaning of the different parameters:
 - `ack_eliciting_threshold`: The number of ACK-eliciting packets an endpoint may receive
   without immediately sending an ACK. A high value is useful when expecting long streams of
   information from the server without sending anything back from the client.
-- `fixed_congestion_window` (optional): If provided, disables congestion control and uses a
-  fixed congestion window size in bytes.
+- `congestion_controller`: The congestion control algorithm to use. 
+  Currently supported options: new_reno, cubic, bbr, ecn_reno, no_cc
+- `initial_congestion_window_packets`: If provided, the initial congestion window is set to the value
+  times the base datagram size (1200 bytes). Default configuration is 10.
+  If used in combination with no_cc, this value is used as a fixed congestion window.
 
 ## Command line arguments
 
