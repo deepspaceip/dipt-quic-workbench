@@ -39,24 +39,24 @@
 0.00s CONNECT (conn = A)
 1802.40s CONNECTED (conn = A)
 1802.40s GET /index.html (stream = A1)
-24972.82s DONE (conn = A, request/response amount = 1)
-24972.82s All connections closed
+24971.94s DONE (conn = A, request/response amount = 1)
+24971.94s All connections closed
 --- Replay log ---
 * Replay log available at replay-log.json
 --- Node stats ---
 * GND (client)
-  * Sent packets: 825 (58487 bytes)
+  * Sent packets: 825 (59618 bytes)
     | 0 packets duplicated in transit (0 bytes)
     | 0 packets marked with the CE ECN codepoint in transit (0 bytes)
     | 0 packets dropped in transit (0 bytes)
-  * Received packets: 8992 (11036206 bytes)
+  * Received packets: 8992 (11036388 bytes)
     | 0 packets received out of order (0 bytes)
 * ING (server)
-  * Sent packets: 8993 (11036278 bytes)
+  * Sent packets: 8993 (11036457 bytes)
     | 0 packets duplicated in transit (0 bytes)
     | 0 packets marked with the CE ECN codepoint in transit (0 bytes)
     | 0 packets dropped in transit (0 bytes)
-  * Received packets: 825 (58487 bytes)
+  * Received packets: 825 (59618 bytes)
     | 0 packets received out of order (0 bytes)
 --- Max buffer usage per node ---
 * ING: 20876 bytes (0 packets dropped due to buffer being full)
