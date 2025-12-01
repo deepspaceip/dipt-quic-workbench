@@ -117,7 +117,8 @@ used by that node. Consider the following example:
   "max_ack_delay_ms": 18446744073709551615,
   "ack_eliciting_threshold": 10,
   "congestion_controller": "no_cc",
-  "initial_congestion_window_packets": 200000
+  "initial_congestion_window_packets": 200000,
+  "enable_qlog": true
 }
 ```
 
@@ -146,6 +147,11 @@ Here's the meaning of the different parameters:
 - `initial_congestion_window_packets`: If provided, the initial congestion window is set to the value
   times the base datagram size (1200 bytes). Default configuration is 10.
   If used in combination with no_cc, this value is used as a fixed congestion window.
+- `enable_qlog` (optional): Toggle on qlog generation for this endpoint. Can be helpful for analyzing
+  internal parameters like the congestion window, which is not included in the pcap.
+  Logs are written to `<node_id>.qlog` in the working directory and can be visualized 
+  using tools like [qvis](https://qvis.quictools.info/). 
+  Be aware the logs can become quite large. Defaults to false.
 
 ## Command line arguments
 

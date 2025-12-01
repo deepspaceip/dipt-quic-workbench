@@ -55,4 +55,7 @@ pub struct QuinnJsonConfig {
     /// default is used.
     /// For 'NoCc', this value is used as the fixed, constant window. If missing it defaults to u64::MAX.
     pub initial_congestion_window_packets: Option<u64>,
+    /// Enable qlog event logging (default: false).
+    #[serde(default)]
+    pub enable_qlog: bool,
 }

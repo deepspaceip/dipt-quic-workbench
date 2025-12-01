@@ -103,6 +103,7 @@ pub fn client_endpoint(
     client_socket: InMemoryUdpSocket,
     quinn_config: &QuinnJsonConfig,
     quinn_rng: &mut Rng,
+    node_id: &str,
 ) -> anyhow::Result<Endpoint> {
     let mut seed = [0; 32];
     quinn_rng.fill(&mut seed);
@@ -115,7 +116,7 @@ pub fn client_endpoint(
     )
     .context("failed to create client endpoint")?;
 
-    endpoint.set_default_client_config(client_config(server_cert, quinn_config)?);
+    endpoint.set_default_client_config(client_config(server_cert, quinn_config, node_id)?);
 
     Ok(endpoint)
 }
@@ -123,6 +124,7 @@ pub fn client_endpoint(
 fn client_config(
     server_cert: CertificateDer<'_>,
     quinn_config: &QuinnJsonConfig,
+    node_id: &str,
 ) -> anyhow::Result<ClientConfig> {
     let mut roots = RootCertStore::empty();
     roots.add(server_cert)?;
@@ -142,7 +144,10 @@ fn client_config(
     crypto.key_log = Arc::new(rustls::KeyLogFile::new());
 
     let mut client_config = ClientConfig::new(Arc::new(QuicClientConfig::try_from(crypto)?));
-    client_config.transport_config(Arc::new(crate::quic::transport_config(quinn_config)));
+    client_config.transport_config(Arc::new(crate::quic::transport_config(
+        quinn_config,
+        node_id,
+    )));
 
     Ok(client_config)
 }
