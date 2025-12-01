@@ -142,7 +142,7 @@ Here's the meaning of the different parameters:
   without immediately sending an ACK. A high value is useful when expecting long streams of
   information from the server without sending anything back from the client.
 - `congestion_controller`: The congestion control algorithm to use. 
-  Currently supported options: new_reno, cubic, bbr, ecn_reno, no_cc
+  Currently supported options: new_reno, cubic, ecn_reno, no_cc
 - `initial_congestion_window_packets`: If provided, the initial congestion window is set to the value
   times the base datagram size (1200 bytes). Default configuration is 10.
   If used in combination with no_cc, this value is used as a fixed congestion window.

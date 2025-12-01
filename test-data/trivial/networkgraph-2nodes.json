@@ -23,8 +23,7 @@
                 "maximize_send_and_receive_windows": true,
                 "max_ack_delay_ms": 23760000,
                 "ack_eliciting_threshold": 10,
-                "congestion_controller": "no_cc",
-                "initial_congestion_window_packets": 375000
+                "congestion_controller": "no_cc"
             }
         },
         {
@@ -49,8 +48,7 @@
                 "maximize_send_and_receive_windows": true,
                 "max_ack_delay_ms": 23760000,
                 "ack_eliciting_threshold": 10,
-                "congestion_controller": "no_cc",
-                "initial_congestion_window_packets": 375000
+                "congestion_controller": "no_cc"
             }
         }
     ],
