@@ -116,7 +116,8 @@ used by that node. Consider the following example:
   "maximize_send_and_receive_windows": true,
   "max_ack_delay_ms": 18446744073709551615,
   "ack_eliciting_threshold": 10,
-  "fixed_congestion_window": 10240
+  "fixed_congestion_window": 10240,
+  "enable_qlog": true
 }
 ```
 
@@ -142,6 +143,11 @@ Here's the meaning of the different parameters:
   information from the server without sending anything back from the client.
 - `fixed_congestion_window` (optional): If provided, disables congestion control and uses a
   fixed congestion window size in bytes.
+- `enable_qlog` (optional): Toggle on qlog generation for this endpoint. Can be helpful for analyzing
+  internal parameters like the congestion window, which is not included in the pcap.
+  Logs are written to `<node_id>.qlog` in the working directory and can be visualized 
+  using tools like [qvis](https://qvis.quictools.info/). 
+  Be aware the logs can become quite large. Defaults to false.
 
 ## Command line arguments
 

@@ -343,7 +343,7 @@
     "data": {
       "packet_id": "f391a0ba-86ff-5205-3f10-de1ffa55f931",
       "packet_number": 2,
-      "packet_size_bytes": 329,
+      "packet_size_bytes": 346,
       "node_id": "ING"
     }
   },
@@ -409,7 +409,7 @@
     "data": {
       "packet_id": "f391a0ba-86ff-5205-3f10-de1ffa55f931",
       "packet_number": 2,
-      "packet_size_bytes": 329,
+      "packet_size_bytes": 346,
       "node_id": "M20"
     }
   },
@@ -466,7 +466,7 @@
     "data": {
       "packet_id": "f391a0ba-86ff-5205-3f10-de1ffa55f931",
       "packet_number": 2,
-      "packet_size_bytes": 329,
+      "packet_size_bytes": 346,
       "node_id": "MVN"
     }
   },
@@ -523,7 +523,7 @@
     "data": {
       "packet_id": "f391a0ba-86ff-5205-3f10-de1ffa55f931",
       "packet_number": 2,
-      "packet_size_bytes": 329,
+      "packet_size_bytes": 346,
       "node_id": "DSN"
     }
   },
@@ -600,7 +600,7 @@
     "data": {
       "packet_id": "f391a0ba-86ff-5205-3f10-de1ffa55f931",
       "packet_number": 2,
-      "packet_size_bytes": 329,
+      "packet_size_bytes": 346,
       "node_id": "GND"
     }
   },
@@ -610,7 +610,7 @@
     "data": {
       "packet_id": "f391a0ba-86ff-5205-3f10-de1ffa55f931",
       "packet_number": 2,
-      "packet_size_bytes": 329,
+      "packet_size_bytes": 346,
       "node_id": "GND"
     }
   },
@@ -869,7 +869,7 @@
     "data": {
       "packet_id": "016c55f0-35b2-6d81-9c2e-ce79fc8dab94",
       "packet_number": 7,
-      "packet_size_bytes": 74,
+      "packet_size_bytes": 170,
       "node_id": "ING"
     }
   },
@@ -908,7 +908,7 @@
     "data": {
       "packet_id": "4dcdffcf-2bf7-5e1a-c853-2c7604926ff1",
       "packet_number": 8,
-      "packet_size_bytes": 237,
+      "packet_size_bytes": 333,
       "node_id": "ING"
     }
   },
@@ -985,7 +985,7 @@
     "data": {
       "packet_id": "016c55f0-35b2-6d81-9c2e-ce79fc8dab94",
       "packet_number": 7,
-      "packet_size_bytes": 74,
+      "packet_size_bytes": 170,
       "node_id": "M20"
     }
   },
@@ -1004,7 +1004,7 @@
     "data": {
       "packet_id": "4dcdffcf-2bf7-5e1a-c853-2c7604926ff1",
       "packet_number": 8,
-      "packet_size_bytes": 237,
+      "packet_size_bytes": 333,
       "node_id": "M20"
     }
   },
@@ -1014,7 +1014,7 @@
     "data": {
       "packet_id": "4dcdffcf-2bf7-5e1a-c853-2c7604926ff1",
       "node_id": "M20",
-      "link_id": "M20-TGO"
+      "link_id": "M20-MVN"
     }
   },
   {
@@ -1033,7 +1033,7 @@
     "data": {
       "packet_id": "05071009-2729-bb5d-5f3a-6db0da5ca6e9",
       "node_id": "M20",
-      "link_id": "M20-MVN"
+      "link_id": "M20-TGO"
     }
   },
   {
@@ -1061,7 +1061,7 @@
     "data": {
       "packet_id": "016c55f0-35b2-6d81-9c2e-ce79fc8dab94",
       "packet_number": 7,
-      "packet_size_bytes": 74,
+      "packet_size_bytes": 170,
       "node_id": "TGO"
     }
   },
@@ -1080,8 +1080,8 @@
     "data": {
       "packet_id": "4dcdffcf-2bf7-5e1a-c853-2c7604926ff1",
       "packet_number": 8,
-      "packet_size_bytes": 237,
-      "node_id": "TGO"
+      "packet_size_bytes": 333,
+      "node_id": "MVN"
     }
   },
   {
@@ -1089,30 +1089,30 @@
     "type": "packetInTransit",
     "data": {
       "packet_id": "4dcdffcf-2bf7-5e1a-c853-2c7604926ff1",
-      "node_id": "TGO",
-      "link_id": "TGO-DSN"
-    }
-  },
-  {
-    "relative_time_ns": 2704702000000,
-    "type": "packetInNode",
-    "data": {
-      "packet_id": "05071009-2729-bb5d-5f3a-6db0da5ca6e9",
-      "packet_number": 9,
-      "packet_size_bytes": 58,
-      "node_id": "MVN"
-    }
-  },
-  {
-    "relative_time_ns": 2704702000000,
-    "type": "packetInTransit",
-    "data": {
-      "packet_id": "05071009-2729-bb5d-5f3a-6db0da5ca6e9",
       "node_id": "MVN",
       "link_id": "MVN-DSN"
     }
   },
   {
+    "relative_time_ns": 2704702000000,
+    "type": "packetInNode",
+    "data": {
+      "packet_id": "05071009-2729-bb5d-5f3a-6db0da5ca6e9",
+      "packet_number": 9,
+      "packet_size_bytes": 58,
+      "node_id": "TGO"
+    }
+  },
+  {
+    "relative_time_ns": 2704702000000,
+    "type": "packetInTransit",
+    "data": {
+      "packet_id": "05071009-2729-bb5d-5f3a-6db0da5ca6e9",
+      "node_id": "TGO",
+      "link_id": "TGO-DSN"
+    }
+  },
+  {
     "relative_time_ns": 2704703000000,
     "type": "packetInNode",
     "data": {
@@ -1137,7 +1137,7 @@
     "data": {
       "packet_id": "016c55f0-35b2-6d81-9c2e-ce79fc8dab94",
       "packet_number": 7,
-      "packet_size_bytes": 74,
+      "packet_size_bytes": 170,
       "node_id": "DSN"
     }
   },
@@ -1156,7 +1156,7 @@
     "data": {
       "packet_id": "4dcdffcf-2bf7-5e1a-c853-2c7604926ff1",
       "packet_number": 8,
-      "packet_size_bytes": 237,
+      "packet_size_bytes": 333,
       "node_id": "DSN"
     }
   },
@@ -1213,7 +1213,7 @@
     "data": {
       "packet_id": "016c55f0-35b2-6d81-9c2e-ce79fc8dab94",
       "packet_number": 7,
-      "packet_size_bytes": 74,
+      "packet_size_bytes": 170,
       "node_id": "GND"
     }
   },
@@ -1223,7 +1223,7 @@
     "data": {
       "packet_id": "016c55f0-35b2-6d81-9c2e-ce79fc8dab94",
       "packet_number": 7,
-      "packet_size_bytes": 74,
+      "packet_size_bytes": 170,
       "node_id": "GND"
     }
   },
@@ -1233,7 +1233,7 @@
     "data": {
       "packet_id": "4dcdffcf-2bf7-5e1a-c853-2c7604926ff1",
       "packet_number": 8,
-      "packet_size_bytes": 237,
+      "packet_size_bytes": 333,
       "node_id": "GND"
     }
   },
@@ -1243,7 +1243,7 @@
     "data": {
       "packet_id": "4dcdffcf-2bf7-5e1a-c853-2c7604926ff1",
       "packet_number": 8,
-      "packet_size_bytes": 237,
+      "packet_size_bytes": 333,
       "node_id": "GND"
     }
   },
@@ -5176,7 +5176,7 @@
     "data": {
       "packet_id": "669d5eed-01eb-7b65-f416-67215d837dbf",
       "packet_number": 51,
-      "packet_size_bytes": 67,
+      "packet_size_bytes": 65,
       "node_id": "GND"
     }
   },
@@ -5214,7 +5214,7 @@
     "data": {
       "packet_id": "669d5eed-01eb-7b65-f416-67215d837dbf",
       "packet_number": 51,
-      "packet_size_bytes": 67,
+      "packet_size_bytes": 65,
       "node_id": "DSN"
     }
   },
@@ -5243,7 +5243,7 @@
     "data": {
       "packet_id": "669d5eed-01eb-7b65-f416-67215d837dbf",
       "packet_number": 51,
-      "packet_size_bytes": 67,
+      "packet_size_bytes": 65,
       "node_id": "TGO"
     }
   },
@@ -5262,7 +5262,7 @@
     "data": {
       "packet_id": "669d5eed-01eb-7b65-f416-67215d837dbf",
       "packet_number": 51,
-      "packet_size_bytes": 67,
+      "packet_size_bytes": 65,
       "node_id": "M20"
     }
   },
@@ -5281,7 +5281,7 @@
     "data": {
       "packet_id": "669d5eed-01eb-7b65-f416-67215d837dbf",
       "packet_number": 51,
-      "packet_size_bytes": 67,
+      "packet_size_bytes": 65,
       "node_id": "ING"
     }
   },
@@ -5291,7 +5291,7 @@
     "data": {
       "packet_id": "669d5eed-01eb-7b65-f416-67215d837dbf",
       "packet_number": 51,
-      "packet_size_bytes": 67,
+      "packet_size_bytes": 65,
       "node_id": "ING"
     }
   },

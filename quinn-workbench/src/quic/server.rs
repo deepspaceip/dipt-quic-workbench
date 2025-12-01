@@ -237,12 +237,13 @@ pub fn server_endpoint(
     server_socket: InMemoryUdpSocket,
     quinn_config: &QuinnJsonConfig,
     quinn_rng: &mut Rng,
+    node_id: &str,
 ) -> anyhow::Result<Endpoint> {
     let mut seed = [0; 32];
     quinn_rng.fill(&mut seed);
 
     let mut server_config = quinn::ServerConfig::with_single_cert(vec![cert], key).unwrap();
-    server_config.transport = Arc::new(crate::quic::transport_config(quinn_config));
+    server_config.transport = Arc::new(crate::quic::transport_config(quinn_config, node_id));
     Endpoint::new_with_abstract_socket(
         crate::quic::endpoint_config(seed),
         Some(server_config),

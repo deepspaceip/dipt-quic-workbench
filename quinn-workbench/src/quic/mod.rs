@@ -7,8 +7,10 @@ use crate::quinn_extensions::no_cc::NoCCConfig;
 use crate::util::{print_link_stats, print_max_buffer_usage_per_node, print_node_stats};
 use anyhow::Context;
 use quinn_proto::congestion::NewRenoConfig;
-use quinn_proto::{AckFrequencyConfig, EndpointConfig, TransportConfig, VarInt};
+use quinn_proto::{AckFrequencyConfig, EndpointConfig, QlogConfig, TransportConfig, VarInt};
 use std::fs;
+use std::fs::File;
+use std::io::BufWriter;
 use std::sync::Arc;
 use std::time::Duration;
 
@@ -78,7 +80,7 @@ fn endpoint_config(rng_seed: [u8; 32]) -> EndpointConfig {
     config
 }
 
-fn transport_config(quinn_config: &QuinnJsonConfig) -> TransportConfig {
+fn transport_config(quinn_config: &QuinnJsonConfig, node_id: &str) -> TransportConfig {
     let mut config = TransportConfig::default();
 
     if !quinn_config.mtu_discovery {
@@ -120,5 +122,24 @@ fn transport_config(quinn_config: &QuinnJsonConfig) -> TransportConfig {
 
     config.initial_rtt(Duration::from_millis(quinn_config.initial_rtt_ms));
 
+    if quinn_config.enable_qlog {
+        let qlog = crate::quic::create_qlog_stream(node_id);
+        config.qlog_stream(Some(qlog));
+    }
+
     config
+}
+
+pub fn create_qlog_stream(filename: &str) -> quinn_proto::QlogStream {
+    let file = File::create(format!("{}.qlog", filename)).expect("failed to create qlog file");
+    let writer = Box::new(BufWriter::new(file));
+
+    let mut config = QlogConfig::default();
+    config.writer(writer);
+    config.title(Some(format!("Qlog trace for node {}", filename)));
+    config.description(Some("Quinn workbench simulation".to_string()));
+
+    config
+        .into_stream()
+        .expect("failed to initialize qlog stream")
 }

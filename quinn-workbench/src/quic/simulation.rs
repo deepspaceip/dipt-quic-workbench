@@ -127,6 +127,7 @@ impl QuicSimulation {
             network.udp_socket_for_node(server_host.clone()),
             &quic_configs[server_host.id().as_ref()],
             &mut quinn_rng,
+            server_host.id(),
         )?;
         let mut server_handled_connections =
             server::server_listen(server.clone(), quic_options.response_size);
@@ -138,6 +139,7 @@ impl QuicSimulation {
             network.udp_socket_for_node(client_host.clone()),
             &quic_configs[client_host.id().as_ref()],
             &mut quinn_rng,
+            client_host.id(),
         )?;
 
         let max_connections = b'Z' - b'A';
