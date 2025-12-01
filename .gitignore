@@ -2,4 +2,5 @@
 .idea
 *.pcap
 *.key
+*.qlog
 replay-log.json

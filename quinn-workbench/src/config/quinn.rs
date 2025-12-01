@@ -41,4 +41,7 @@ pub struct QuinnJsonConfig {
     /// If true, configures congestion control to use a variant of `NewReno` that ignores packet
     /// loss and only takes ECN into consideration.
     pub use_ecn_based_reno: bool,
+    /// Enable qlog event logging (default: false).
+    #[serde(default)]
+    pub enable_qlog: bool,
 }

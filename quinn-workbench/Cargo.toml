@@ -17,8 +17,8 @@ event-listener.workspace = true
 fastrand.workspace = true
 futures.workspace = true
 in-memory-network = { path = "../in-memory-network" }
-quinn = { workspace = true, features = ["rustls-ring", "platform-verifier"] }
-quinn-proto.workspace = true
+quinn = { workspace = true, features = ["rustls-ring", "platform-verifier", "qlog"] }
+quinn-proto = { workspace = true, features = ["qlog"] }
 rustls.workspace = true
 tracing-subscriber.workspace = true
 serde = { workspace = true, features = ["derive"] }
