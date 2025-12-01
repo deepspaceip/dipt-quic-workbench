@@ -7,8 +7,6 @@ pub enum CongestionControlAlgorithm {
     Cubic,
     /// NewReno congestion control
     NewReno,
-    /// BBR congestion control
-    Bbr,
     /// Disables congestion control and uses the intial_congestion_window as a fixed window instead
     NoCc,
     /// Configures congestion control to use a variant of `NewReno` that ignores packet
