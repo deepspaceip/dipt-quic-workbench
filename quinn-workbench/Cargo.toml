@@ -6,6 +6,8 @@ edition = "2024"
 [features]
 default = ["rt-tokio"]
 rt-tokio = ["in-memory-network/rt-tokio"]
+
+# Note: this async runtime is highly experimental and not guaranteed to return correct results
 rt-custom = ["in-memory-network/rt-custom"]
 
 [dependencies]

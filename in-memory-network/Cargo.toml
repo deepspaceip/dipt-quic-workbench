@@ -5,6 +5,8 @@ edition = "2024"
 
 [features]
 rt-tokio = ["dep:tokio", "quinn/runtime-tokio"]
+
+# Note: this async runtime is highly experimental and not guaranteed to return correct results
 rt-custom = ["dep:sittard"]
 
 [dependencies]
