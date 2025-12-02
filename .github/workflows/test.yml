@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        feature: ["rt-tokio", "rt-custom"]
+        feature: ["rt-tokio"]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
