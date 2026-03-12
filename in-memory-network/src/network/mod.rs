@@ -305,7 +305,7 @@ impl InMemoryNetwork {
     /// Returns the host bound to the provided address
     pub fn host(self: &InMemoryNetwork, ip: IpAddr) -> &Arc<Node> {
         let node = &self.nodes_by_addr[&ip];
-        assert!(node.udp_endpoint.is_some(), "not a host");
+        assert!(node.udp_endpoint.is_some(), "Node is not a host: {ip}");
         node
     }
 
