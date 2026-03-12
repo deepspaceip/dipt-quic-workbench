@@ -13,6 +13,7 @@ pub mod spec;
 
 use crate::InTransitData;
 use crate::async_rt;
+use crate::async_rt::DelayMode;
 use crate::async_rt::time::Instant;
 use crate::network::event::{NetworkEventPayload, NetworkEvents};
 use crate::network::inbound_queue::InboundQueue;
@@ -68,9 +69,9 @@ impl InMemoryNetwork {
         pcap_exporter_factory: Arc<dyn PcapExporterFactory>,
         rng: Rng,
         start: Instant,
-        disable_time_warping: bool,
+        delay_mode: DelayMode,
     ) -> anyhow::Result<Arc<Self>> {
-        if !disable_time_warping {
+        if delay_mode == DelayMode::TimeWarp {
             // Time warping is enabled, so the start instant should be zero
             if !tracer.is_fresh() {
                 bail!("attempted to initialize network with an old tracer");

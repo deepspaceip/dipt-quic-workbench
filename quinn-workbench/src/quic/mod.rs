@@ -6,6 +6,7 @@ use crate::quinn_extensions::ecn_cc::EcnCcFactory;
 use crate::quinn_extensions::no_cc::NoCCConfig;
 use crate::util::{print_link_stats, print_max_buffer_usage_per_node, print_node_stats};
 use anyhow::Context;
+use in_memory_network::async_rt::DelayMode;
 use quinn_proto::congestion::{CubicConfig, NewRenoConfig};
 use quinn_proto::{AckFrequencyConfig, EndpointConfig, TransportConfig, VarInt};
 use std::fs;
@@ -16,10 +17,15 @@ mod client;
 mod server;
 pub mod simulation;
 
-pub async fn run_and_report_stats(quic_options: &QuicOpt) -> anyhow::Result<()> {
+pub async fn run_and_report_stats(
+    quic_options: &QuicOpt,
+    delay_mode: DelayMode,
+) -> anyhow::Result<()> {
     let mut simulation = QuicSimulation::new();
     let network_config = load_network_config(&quic_options.network)?;
-    let result = simulation.run(quic_options, network_config).await;
+    let result = simulation
+        .run(quic_options, network_config, delay_mode)
+        .await;
 
     let Some((tracer, network)) = simulation.tracer_and_network else {
         eprintln!("Error...");

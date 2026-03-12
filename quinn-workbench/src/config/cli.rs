@@ -4,6 +4,9 @@ use std::path::PathBuf;
 
 #[derive(Parser, Debug, Clone)]
 pub struct CliOpt {
+    /// Disable time-warping (making the simulation use real-world delays)
+    #[arg(long, default_value_t = false)]
+    pub disable_time_warping: bool,
     #[command(subcommand)]
     pub command: Command,
 }
@@ -56,10 +59,6 @@ pub struct NetworkOpt {
 
 #[derive(Parser, Debug, Clone)]
 pub struct QuicOpt {
-    /// Disable time-warping (making the simulation use real-world delays)
-    #[arg(long, default_value_t = false)]
-    pub disable_time_warping: bool,
-
     /// The number of requests that should be made
     #[arg(long, default_value_t = 10)]
     pub requests: u32,

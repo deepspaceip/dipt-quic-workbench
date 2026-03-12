@@ -3,6 +3,7 @@ use crate::config::cli::PingOpt;
 use anyhow::Context as _;
 use fastrand::Rng;
 use in_memory_network::async_rt;
+use in_memory_network::async_rt::DelayMode;
 use in_memory_network::async_rt::time::Instant;
 use in_memory_network::network::InMemoryNetwork;
 use in_memory_network::network::event::NetworkEvents;
@@ -19,7 +20,11 @@ use std::net::SocketAddr;
 use std::sync::Arc;
 use std::time::Duration;
 
-pub async fn run(ping_opt: &PingOpt, network_config: NetworkConfig) -> anyhow::Result<()> {
+pub async fn run(
+    ping_opt: &PingOpt,
+    network_config: NetworkConfig,
+    delay_mode: DelayMode,
+) -> anyhow::Result<()> {
     let simulation_start = Instant::now();
 
     // Network
@@ -41,7 +46,7 @@ pub async fn run(ping_opt: &PingOpt, network_config: NetworkConfig) -> anyhow::R
         Arc::new(FileBasedPcapExporterFactory),
         Rng::with_seed(ping_opt.network.network_rng_seed),
         simulation_start,
-        false,
+        delay_mode,
     )?;
 
     println!("--- Network ---");

@@ -30,25 +30,21 @@ fn main() -> anyhow::Result<()> {
     unsafe { std::env::set_var("SSLKEYLOGFILE", "keylog.key") };
     let opt = CliOpt::parse();
 
+    let delay_mode = if opt.disable_time_warping {
+        DelayMode::Wait
+    } else {
+        DelayMode::TimeWarp
+    };
+    let rt = async_rt::new_rt(delay_mode);
     match &opt.command {
-        Command::Quic(quic_opt) => {
-            let delay_mode = if quic_opt.disable_time_warping {
-                DelayMode::Wait
-            } else {
-                DelayMode::TimeWarp
-            };
-            let rt = async_rt::new_rt(delay_mode);
-            rt.block_on(quic::run_and_report_stats(quic_opt))
-        }
+        Command::Quic(quic_opt) => rt.block_on(quic::run_and_report_stats(quic_opt, delay_mode)),
         Command::Ping(ping_opt) => {
             let network_config = load_network_config(&ping_opt.network)?;
-            let rt = async_rt::new_rt(DelayMode::TimeWarp);
-            rt.block_on(ping::run(ping_opt, network_config))
+            rt.block_on(ping::run(ping_opt, network_config, delay_mode))
         }
         Command::Throughput(throughput_opt) => {
             let network_config = load_network_config(&throughput_opt.network)?;
-            let rt = async_rt::new_rt(DelayMode::TimeWarp);
-            rt.block_on(throughput::run(throughput_opt, network_config))
+            rt.block_on(throughput::run(throughput_opt, network_config, delay_mode))
         }
         Command::Rt => {
             println!("tokio");

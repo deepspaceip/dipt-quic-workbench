@@ -6,6 +6,7 @@ use async_lock::Semaphore;
 use fastrand::Rng;
 use futures::StreamExt;
 use in_memory_network::async_rt;
+use in_memory_network::async_rt::DelayMode;
 use in_memory_network::async_rt::time::Instant;
 use in_memory_network::network::InMemoryNetwork;
 use in_memory_network::network::event::NetworkEvents;
@@ -32,6 +33,7 @@ impl QuicSimulation {
         &mut self,
         quic_options: &QuicOpt,
         network_config: NetworkConfig,
+        delay_mode: DelayMode,
     ) -> anyhow::Result<()> {
         println!("--- Params ---");
         let (quinn_rng_seed, simulated_network_rng_seed) = if quic_options.network.non_deterministic
@@ -80,7 +82,7 @@ impl QuicSimulation {
             Arc::new(NoOpPcapExporterFactory),
             Rng::with_seed(simulated_network_rng_seed),
             start,
-            quic_options.disable_time_warping,
+            delay_mode,
         )?;
 
         println!("--- Network ---");
@@ -89,7 +91,7 @@ impl QuicSimulation {
             let status = connectivity_check_network.get_link_status(&link_spec.id);
             println!("  * {}: {}", link_spec.id, status);
         }
-        if quic_options.disable_time_warping {
+        if delay_mode == DelayMode::Wait {
             println!("* Connectivity check skipped to save time (time warping is disabled)");
         } else {
             println!("* Running connectivity check...");
@@ -119,7 +121,7 @@ impl QuicSimulation {
             Arc::new(FileBasedPcapExporterFactory),
             Rng::with_seed(simulated_network_rng_seed),
             start,
-            quic_options.disable_time_warping,
+            delay_mode,
         )?;
         self.tracer_and_network = Some((tracer.clone(), network.clone()));
 

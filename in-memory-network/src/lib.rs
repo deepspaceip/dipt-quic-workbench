@@ -27,6 +27,7 @@ pub struct InTransitData {
 #[cfg(test)]
 mod test {
     use super::*;
+    use crate::async_rt::DelayMode;
     use crate::network::InMemoryNetwork;
     use crate::network::event::{
         NetworkEvent, NetworkEventPayload, NetworkEvents, UpdateLinkStatus,
@@ -217,7 +218,7 @@ mod test {
             Arc::new(NoOpPcapExporterFactory),
             Rng::with_seed(42),
             async_rt::time::Instant::now(),
-            false,
+            DelayMode::TimeWarp,
         )
         .unwrap()
     }

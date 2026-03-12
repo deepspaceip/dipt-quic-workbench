@@ -7,6 +7,7 @@ use anyhow::Context as _;
 use fastrand::Rng;
 use futures::FutureExt;
 use in_memory_network::async_rt;
+use in_memory_network::async_rt::DelayMode;
 use in_memory_network::async_rt::time::Instant;
 use in_memory_network::network::InMemoryNetwork;
 use in_memory_network::network::event::NetworkEvents;
@@ -25,6 +26,7 @@ use std::{cmp, fs};
 pub async fn run(
     throughput_opt: &ThroughputOpt,
     network_config: NetworkConfig,
+    delay_mode: DelayMode,
 ) -> anyhow::Result<()> {
     let simulation_start = Instant::now();
 
@@ -47,7 +49,7 @@ pub async fn run(
         Arc::new(FileBasedPcapExporterFactory),
         Rng::with_seed(throughput_opt.network.network_rng_seed),
         simulation_start,
-        false,
+        delay_mode,
     )?;
 
     println!("--- Network ---");
