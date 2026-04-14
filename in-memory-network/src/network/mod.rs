@@ -497,7 +497,7 @@ impl InMemoryNetwork {
                 .inbound
                 .clone()
                 .lock()
-                .send(data, Duration::default());
+                .send(data, Instant::now(), Duration::default());
 
             return;
         }

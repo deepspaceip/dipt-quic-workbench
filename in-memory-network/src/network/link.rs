@@ -159,19 +159,21 @@ impl NetworkLink {
             data.transmit.ecn = Some(EcnCodepoint::from_bits(0b11).unwrap())
         }
 
-        // Record
+        // Trace
         self.tracer.track_packet_in_transit(src_node, self, &data);
 
         // Send
-        self.pacer
-            .lock()
-            .track_send(Instant::now(), data.transmit.packet_size());
+        // Track send on link and get virtual completion time
+        let tx_completion_time = self.pacer.lock().track_send(Instant::now(), data.transmit.packet_size());
+        // Release buffer
         src_node
             .outbound_buffer()
             .release(data.transmit.packet_size());
+
+        // Pass the completion time as the "sent" timestamp to inbound queue
         self.in_transit
             .lock()
-            .send(data, self.delay + anomalies.extra_delay);
+            .send( data, tx_completion_time,self.delay + anomalies.extra_delay);
     }
 
     pub(crate) async fn sleep_until_ready_to_send(
@@ -298,7 +300,7 @@ impl PacketPacer {
         }
     }
 
-    fn track_send(&mut self, now: Instant, packet_size_bytes: usize) {
+    fn track_send(&mut self, now: Instant, packet_size_bytes: usize) -> Instant {
         let packet_size_bits = packet_size_bytes.saturating_mul(8);
         // Calculate transmission duration with nanosecond precision for high accuracy
         let send_duration_ns =
@@ -313,9 +315,12 @@ impl PacketPacer {
             _ => now,
         };
 
+        let completion_time = start_time + duration;
         self.last_send = Some(SendingPacket {
-            send_done: start_time + duration,
+            send_done: completion_time,
         });
+
+        completion_time
     }
 }
 

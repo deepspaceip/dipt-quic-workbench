@@ -21,10 +21,10 @@ impl InboundQueue {
         }
     }
 
-    pub(crate) fn send(&mut self, data: InTransitData, delay: Duration) {
+    pub(crate) fn send(&mut self, data: InTransitData, sent: Instant, delay: Duration) {
         self.queue.push(PrioritizedInTransitData {
             data,
-            sent: Instant::now(),
+            sent,
             delay,
         });
 
